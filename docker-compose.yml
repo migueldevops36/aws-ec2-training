@@ -1,0 +1,41 @@
+version: '3.8'
+
+networks:
+  red-monitoreo:
+    driver: bridge
+
+services:
+
+  grafana:
+    container_name: mi_grafana
+    image: grafana/grafana:latest
+    networks:
+      red-monitoreo:
+    ports:
+      - "3000:3000"
+
+  prometheus:
+    container_name: mi_prometheus
+    image: prom/prometheus:latest
+    networks:
+      red-monitoreo:
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  node-exporter:
+    container_name: mi_node_exporter
+    image: prom/node-exporter:latest
+    networks:
+      red-monitoreo:
+    ports:
+      - "9100:9100"
+
+  web:
+    container_name: mi_servidor_web
+    image: nginx:latest
+    networks:
+      red-monitoreo:
+    ports:
+      - "80:80"
