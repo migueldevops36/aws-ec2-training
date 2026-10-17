@@ -1,1 +1,2 @@
 upgrade and practice git push
+GitHub Actions automates repetitive tasks.
