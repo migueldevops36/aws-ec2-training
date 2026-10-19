@@ -1,4 +1,4 @@
-name: Deploy AWS EC2
+name: Validate DevOps Project
 
 on:
   push:
@@ -6,15 +6,21 @@ on:
       - main
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar código
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Comprobar proyecto
+      - name: Set up Docker Compose
+        uses: docker/setup-compose-action@v1
+
+      - name: Validate Docker Compose
+        run: docker compose -f docker-compose.yml config -q
+
+      - name: Check project files
         run: |
-          echo "GitHub Actions funciona"
-          echo "Proyecto: aws-ec2-training"
+          echo "GitHub Actions is working"
+          echo "Project: aws-ec2-training"
           ls -la
