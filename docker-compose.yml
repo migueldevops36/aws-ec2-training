@@ -6,7 +6,7 @@ services:
 
   grafana:
     container_name: mi_grafana
-    image: grafana/grafana:latest
+    image: grafana/grafana:13.2.3
     networks:
       red-monitoreo:
     ports:
@@ -14,7 +14,7 @@ services:
 
   prometheus:
     container_name: mi_prometheus
-    image: prom/prometheus:latest
+    image: prom/prometheus:v3.15.0
     networks:
       red-monitoreo:
     ports:
@@ -24,7 +24,7 @@ services:
 
   node-exporter:
     container_name: mi_node_exporter
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.12.1
     networks:
       red-monitoreo:
     ports:
@@ -32,7 +32,7 @@ services:
 
   web:
     container_name: mi_servidor_web
-    image: nginx:latest
+    image: nginx:1.31.6
     networks:
       red-monitoreo:
     ports:
