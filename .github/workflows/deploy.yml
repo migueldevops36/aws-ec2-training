@@ -19,8 +19,13 @@ jobs:
       - name: Validate Docker Compose
         run: docker compose -f docker-compose.yml config -q
 
-      - name: Check Prometheus configuration
-        run: test -f prometheus/prometheus.yml
+      - name: Validate Prometheus configuration
+        run: |
+          docker run --rm \
+            --entrypoint promtool \
+            -v "$GITHUB_WORKSPACE/prometheus:/etc/prometheus:ro" \
+            prom/prometheus:v3.15.0 \
+            check config /etc/prometheus/prometheus.yml
 
       - name: Check project files
         run: |
