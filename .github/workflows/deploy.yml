@@ -52,3 +52,20 @@ jobs:
             -o ConnectTimeout=15 \
             "$EC2_USER@$EC2_HOST" \
             "echo 'SSH connection successful'; hostname"
+      - name: Deploy to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          set -eu
+          printf '%s\n' "$EC2_SSH_KEY" > "$RUNNER_TEMP/ec2_key"
+          chmod 600 "$RUNNER_TEMP/ec2_key"
+          ssh \
+            -i "$RUNNER_TEMP/ec2_key" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=15 \
+            "$EC2_USER@$EC2_HOST" \
+            'cd ~/firstproject && git pull --ff-only origin main && sudo docker compose up -d'
+          rm -f "$RUNNER_TEMP/ec2_key"
