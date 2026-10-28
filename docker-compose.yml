@@ -11,6 +11,8 @@ services:
       red-monitoreo:
     ports:
       - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
 
   prometheus:
     container_name: mi_prometheus
@@ -40,3 +42,5 @@ services:
       red-monitoreo:
     ports:
       - "80:80"
+volumes:
+  grafana_data:
