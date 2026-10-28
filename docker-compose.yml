@@ -3,10 +3,10 @@ networks:
     driver: bridge
 
 services:
-
   grafana:
     container_name: mi_grafana
     image: grafana/grafana:13.2.3
+    restart: unless-stopped
     networks:
       red-monitoreo:
     ports:
@@ -15,6 +15,7 @@ services:
   prometheus:
     container_name: mi_prometheus
     image: prom/prometheus:v3.15.0
+    restart: unless-stopped
     networks:
       red-monitoreo:
     ports:
@@ -25,6 +26,7 @@ services:
   node-exporter:
     container_name: mi_node_exporter
     image: prom/node-exporter:v1.12.1
+    restart: unless-stopped
     networks:
       red-monitoreo:
     ports:
@@ -33,6 +35,7 @@ services:
   web:
     container_name: mi_servidor_web
     image: nginx:1.31.6
+    restart: unless-stopped
     networks:
       red-monitoreo:
     ports:
